@@ -1,70 +1,113 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int SIZE = 1000;
 
-int hashFunction(int key)
+class MyHashMap
 {
-    return key % SIZE;
-}
+private:
+    int SIZE;
+    vector<list<pair<int, int>>> buckets;
 
-int get(int key, vector<list<pair<int, int>>> &buckets)
-{
-    int index = hashFunction(key);
-
-    for (auto &p : buckets[index])
+    int hashFunction(int key)
     {
-        if (p.first == key)
-            return p.second;
+        return key % SIZE;
     }
-    return -1;
-}
 
-void put(int key, int val, vector<list<pair<int, int>>> &buckets)
-{
-    int index = hashFunction(key);
-
-    for (auto &p : buckets[index])
+public:
+    MyHashMap(int size = 1000)
     {
-        if (p.first == key)
+        SIZE = size;
+        buckets.resize(SIZE);
+    }
+
+    int get(int key)
+    {
+        int index = hashFunction(key);
+
+        for (auto &p : buckets[index])
         {
-            p.second = val;
-            return;
+            if (p.first == key)
+                return p.second;
+        }
+        return -1;
+    }
+
+    void put(int key, int val)
+    {
+        int index = hashFunction(key);
+
+        for (auto &p : buckets[index])
+        {
+            if (p.first == key)
+            {
+                p.second = val;
+                return;
+            }
+        }
+
+        buckets[index].push_back({key, val});
+    }
+
+    void remove(int key)
+    {
+        int index = hashFunction(key);
+        auto &bucket = buckets[index];
+        for (auto it = bucket.begin(); it != bucket.end(); ++it)
+        {
+            if (it->first == key)
+            {
+                bucket.erase(it);
+                return;
+            }
         }
     }
 
-    buckets[index].push_back({key, val});
-}
-
-void remove(int key, vector<list<pair<int, int>>> &buckets)
-{
-    int index = hashFunction(key);
-    auto &bucket = buckets[index];
-    for (auto it = bucket.begin(); it != bucket.end(); ++it)
+    bool contains(int key)
     {
-        if (it->first == key)
+        int index = hashFunction(key);
+        for (auto &p : buckets[index])
         {
-            bucket.erase(it);
-            return;
+            if (p.first == key)
+                return true;
+        }
+        return false;
+    }
+
+    void clear()
+    {
+        for (auto &bucket : buckets)
+        {
+            bucket.clear();
         }
     }
-}
-
+};
 int main()
 {
-    vector<list<pair<int, int>>> buckets(SIZE);
+    MyHashMap map(100);
 
-    put(5, 100, buckets);
-    put(25, 120, buckets);
-    put(2, 12, buckets);
-    put(3, 10, buckets);
+    // Basic Insertions
+    map.put(1, 100);
+    map.put(2, 200);
 
-    cout << get(3, buckets) << endl;
-    cout << get(5, buckets) << endl;
-    cout << get(25, buckets) << endl;
-    cout << get(2, buckets) << endl;
-    remove(2, buckets);
-    cout << get(2, buckets) << endl;
+    // Overwrite Value
+    map.put(1, 999); // Overwrite test
+    cout << "After overwrite (expected 999): " << map.get(1) << endl;
+
+    // Remove Non-Existent Key
+    map.remove(3); // Should not crash or throw
+
+    // Get After Remove
+    map.remove(2);
+    cout << "After remove key 2 (expected -1): " << map.get(2) << endl;
+
+    // Contains
+    cout << "Contains key 1? (expected 1): " << map.contains(1) << endl;
+    cout << "Contains key 2? (expected 0): " << map.contains(2) << endl;
+
+    // Clear Test
+    map.clear();
+    cout << "After clear, get key 1 (expected -1): " << map.get(1) << endl;
+    cout << "After clear, contains key 1? (expected 0): " << map.contains(1) << endl;
 
     return 0;
 }
