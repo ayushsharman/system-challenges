@@ -1,0 +1,1 @@
+It took me around 10-15 minutes to setup hello world project and specifically around running it using nodemon as it was crashing, but just a took a bit help of google. I think routes I still remember writing so let's see.
