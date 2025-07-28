@@ -1,18 +1,16 @@
-const express = require('express');
+import express from 'express';
 const app = express();
 
-const port = 3000;
+const PORT = 3000;
+
+import mainRoutes from './routes/notes.js';
+
+app.use(express.json());
+
+app.use('/', mainRoutes);
 
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-})
-app.get('/hat', (req, res) => {
-    res.send('Hello Worrrrrld');
-})
-
-
-app.listen(port, () => {
-    console.log(`Listening on Port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Listening on Port ${PORT}`);
 })
 
