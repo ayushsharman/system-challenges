@@ -1,4 +1,4 @@
-import bcrypt from "bcrypjs";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { users } from "../data/userStore.js";
 
