@@ -1,9 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { users } from "../data/userStore.js";
+import { loginSchema, registerSchema } from "../validations/authSchemas.js";
 
 export const register = async (req, res) => {
-    const { username, password } = req.body;
+    const parsedData = registerSchema.parse(req.body);
+    const { username, password } = parsedData;
 
     if (users.some((u) => u.username == username)) {
         return res.status(400).json({ error: "Username already exists" });
@@ -16,7 +18,8 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    const { username, password } = req.body;
+    const parsedData = loginSchema.parse(req.body);
+    const { username, password } = parsedData;
 
     if (!username || !password) {
         return res.status(404).json({ message: "Empty fields" });
