@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .heading {
+            text-align: center;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Checker</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="heading">Prime Number Checker</h1>
+        <div>
+            <input type="number" placeholder="Enter a number" id="input">
+            <button onclick="checkPrime()">Check</button>
+        </div>
+        <p id="result"></p>
+    </div>
+    <script>
+        function checkPrime() {
+            const num = parseInt(document.getElementById('input').value);
+            const res = document.getElementById('result');
+
+            if (isNaN(num) || num <= 1) {
+                res.textContent = "Please enter a number greater than 1";
+                res.style.color = "red";
+                return;
+            }
+
+            let isPrime = true;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+
+            if (isPrime) {
+                res.textContent = `${num} is a Prime Number.`;
+                res.style.color = "green";
+            } else {
+                res.textContent = `${num} is a Non-Prime Number.`;
+                res.style.color = "blue";
+            }
+        }
+    </script>
+</body>
+
+</html>
