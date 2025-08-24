@@ -80,8 +80,14 @@
 // console.log(i);
 // console.log(j);
 
-const arr = [1, 2, 3, 4, 5, 6];
-const result = arr.filter(num => num % 2 === 0)
-                  .map(num => num * 2)
-                  .reduce((acc, curr) => acc + curr, 0);
-console.log(result);
+// const arr = [1, 2, 3, 4, 5, 6];
+// const result = arr.filter(num => num % 2 === 0)
+//                   .map(num => num * 2)
+//                   .reduce((acc, curr) => acc + curr, 0);
+// console.log(result);
+
+let a = 156e5;
+let b = 156e-5;
+
+console.log(a)
+console.log(b)
