@@ -9,6 +9,7 @@ export const getMessage = (req, res) => {
 
 export const sendMessage = (req, res) => {
   const { senderId, receiverId, text } = req.body;
+  console.log("received data")
 
   if (!text) {
     return res.status(400).json({ message: "No message text" });
